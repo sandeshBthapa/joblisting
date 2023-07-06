@@ -1,0 +1,173 @@
+/*  import google fonts */
+*{
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body{
+  background: rgb(233, 233, 233);
+}
+.container{
+  display: flex;
+  width: 1200px;
+  margin: auto;
+}
+
+
+ul{
+  margin: 0 auto;
+}
+li{
+  padding-bottom: 2rem;
+}
+li a{
+  font-size: 16px;
+  color: rgb(85, 83, 83);
+}
+
+
+.main{
+  width: 100%;
+}
+
+
+.main-top{
+  width: 100%;
+  background: #fff;
+  padding: 10px;
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgb(43, 43, 43);
+}
+
+
+
+.main-body{
+  padding: 10px 10px 10px 20px;
+}
+
+
+h1{
+  margin: 20px 10px;
+}
+
+
+.row{
+  display: flex;
+  padding: 10px;
+  margin-top: 1.3rem;
+  justify-content: space-between;
+}
+
+
+.row p{
+  color: rgb(54, 54, 54);
+  font-size: 15px;
+}
+
+
+.row p span{
+  color: blueviolet;
+}
+
+
+.job_card{
+  width: 100%;
+  padding: 15px;
+  cursor: pointer;
+  display: flex;
+  border-radius: 10px;
+  background: #fff;
+  margin-bottom: 15px;
+  justify-content: space-between;
+  border: 2px solid rgb(190, 190, 190);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+}
+.job_details{
+  display: flex;
+}
+
+
+.job_details .img{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.job_details .img i{
+  width: 70px;
+  font-size: 3rem;
+  margin-left: 1rem;
+  padding: 10px;
+  color: rgb(82, 22, 138);
+  background: rgb(216, 205, 226);
+}
+.job_details .text{
+  margin-left: 2.3rem;
+}
+
+
+.job_details .text span{
+  color: rgb(116, 112, 112);
+}
+
+
+.job_salary{
+  text-align: right;
+  color: rgb(54, 54, 54);
+}
+
+
+
+.keyword {
+    color: green;
+  }
+
+.btn-rounded {
+    border-radius: 50px; 
+  }
+
+  
+  .filter-bar {
+    position: relative;
+  }
+  
+  .filter-tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  
+  .filter-tag {
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 3px;
+    padding: 5px 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .filter-tag span {
+    margin-right: 5px;
+  }
+  
+  .btn-clear {
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  
+  .btn-clear i {
+    color: #999;
+  }
+  

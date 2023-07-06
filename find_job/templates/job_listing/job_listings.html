@@ -1,0 +1,158 @@
+{% load custom_filters %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Job Dashboard</title>
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" />
+  <!-- Font Awesome Cdn Link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <style>
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <section class="main">
+
+      <div class="main-body">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="search-bar">
+                  <input type="search" id="searchInput" class="form-control" placeholder="Search job by position or keywords..."
+                    onkeyup="searchJobs()">
+                  <div id="selectedKeyword" class="selected-keyword hidden">
+                    <span id="selectedKeywordText"></span>
+                    <button class="btn btn-clear" onclick="clearSelectedKeyword()">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <select name="filter_jobs" class="form-control" id="filterJobs" onchange="filterJobs()">
+                  <option value="">Filter</option>
+                  {% for job in job_listings %}
+                  {% for keyword in job.keywords %}
+                  <option>{{ keyword }}</option>
+                  {% endfor %}
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            {% for job in job_listings %}
+            <div class="job_card" data-keywords="{{ job.keywords|join:',' }}">
+              <div class="job_details">
+                <div class="img">
+                  <img src="{{ job.company_logo }}" alt="{{ job.company }}" width="100" height="100">
+                </div>
+                <div class="text">
+                  <h5>{{ job.company }}</h5>
+                  <h6>{{ job.position }}</h6>
+                  <span>{{ job.timing }} {{ job.location }}</span>
+                </div>
+              </div>
+              <div class="job_salary">
+                <ul class="list-inline rounded">
+                  {% for keyword in job.keywords %}
+                  <li class="list-inline-item">
+                    <button class="btn btn-outline-success btn-sm" onclick="searchByKeyword('{{ keyword }}')">{{ keyword }}</button>
+                  </li>
+                  {% endfor %}
+                </ul>
+                <span>Posted {{ job.posted_on|days_ago }} days ago</span>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function searchJobs() {
+      const input = document.getElementById('searchInput');
+      const filter = input.value.toUpperCase();
+      const jobCards = document.getElementsByClassName('job_card');
+
+      for (let i = 0; i < jobCards.length; i++) {
+        const position = jobCards[i].getElementsByTagName('h6')[0].innerText.toUpperCase();
+        const keywords = jobCards[i].getAttribute('data-keywords').toUpperCase();
+
+        if (position.includes(filter) || keywords.includes(filter)) {
+          jobCards[i].classList.remove('hidden');
+        } else {
+          jobCards[i].classList.add('hidden');
+        }
+      }
+
+      showSelectedKeyword(filter);
+    }
+
+    function filterJobs() {
+      const select = document.getElementById('filterJobs');
+      const filter = select.value.toUpperCase();
+      const jobCards = document.getElementsByClassName('job_card');
+
+      if (filter === '') {
+        for (let i = 0; i < jobCards.length; i++) {
+          jobCards[i].classList.remove('hidden');
+        }
+      } else {
+        for (let i = 0; i < jobCards.length; i++) {
+          const keywords = jobCards[i].getAttribute('data-keywords').toUpperCase();
+          if (keywords.includes(filter)) {
+            jobCards[i].classList.remove('hidden');
+          } else {
+            jobCards[i].classList.add('hidden');
+          }
+        }
+      }
+
+      showSelectedKeyword(filter);
+    }
+
+    function searchByKeyword(keyword) {
+      const input = document.getElementById('searchInput');
+      input.value = keyword;
+      searchJobs();
+    }
+
+    function showSelectedKeyword(keyword) {
+      const selectedKeywordDiv = document.getElementById('selectedKeyword');
+      const selectedKeywordText = document.getElementById('selectedKeywordText');
+
+      if (keyword === '') {
+        selectedKeywordDiv.classList.add('hidden');
+      } else {
+        selectedKeywordText.textContent = keyword;
+        selectedKeywordDiv.classList.remove('hidden');
+      }
+    }
+
+    function clearSelectedKeyword() {
+      const input = document.getElementById('searchInput');
+      input.value = '';
+      searchJobs();
+    }
+  </script>
+</body>
+
+</html>
