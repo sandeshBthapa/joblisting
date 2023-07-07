@@ -106,6 +106,31 @@
       showSelectedKeyword(filter);
     }
 
+    function populateFilterDropdown() {
+        const select = document.getElementById('filterJobs');
+        const jobCards = document.getElementsByClassName('job_card');
+        const uniqueKeywords = new Set();
+
+        // Collect unique keywords from job cards
+        for (let i = 0; i < jobCards.length; i++) {
+          const keywords = jobCards[i].getAttribute('data-keywords').split(',');
+          for (let j = 0; j < keywords.length; j++) {
+            uniqueKeywords.add(keywords[j].trim());
+          }
+        }
+
+        // Clear previous options
+        select.innerHTML = '<option value="">Filter</option>';
+
+        // Add unique keywords as options
+        uniqueKeywords.forEach((keyword) => {
+          const option = document.createElement('option');
+          option.value = keyword;
+          option.textContent = keyword;
+          select.appendChild(option);
+        });
+      }
+
     function filterJobs() {
       const select = document.getElementById('filterJobs');
       const filter = select.value.toUpperCase();
@@ -128,6 +153,9 @@
 
       showSelectedKeyword(filter);
     }
+
+    // Call the populateFilterDropdown() function to initialize the filter dropdown
+    populateFilterDropdown();
 
     function searchByKeyword(keyword) {
       const input = document.getElementById('searchInput');
